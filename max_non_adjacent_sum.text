@@ -1,0 +1,37 @@
+https://www.codingninjas.com/codestudio/problems/max-non-adjacent-sum_4830857?leftPanelTab=1
+#include<bits/stdc++.h>
+
+//Bottom up approch
+int solve_tab(vector<int> arr, int n)
+{
+    vector<int>dp(n,0);
+    dp[0] = arr[0]; //to give max sum we consider the first element
+    
+    for(int i = 1; i < n; i++)
+    {
+        int take = dp[i-2] + arr[i];
+        int not_take = dp[i-1];
+        dp[i] =  max(take, not_take);
+    }
+    return dp[n-1];
+}
+//Top Bottom approch
+int solve_memo(vector<int> arr, int n, vector<int> &dp)
+{
+    if(n < 0) return 0;
+     if(n==0) return arr[0]; //we have reached to end of array from reverse so to have max sum we include it to the subarray or we can say there is only element in array 
+    if(dp[n] != -1) return dp[n];
+     //taking the current element to the subset
+     int sum_take = solve_memo(arr, n-2, dp) + arr[n];
+     //Not taking the current element to the subset
+     int sum_not_take = solve_memo(arr, n-1, dp);
+    
+     return dp[n] = max(sum_take, sum_not_take);
+     
+}
+int maxSum(int n, vector<int> arr){
+    vector<int>dp(n,-1);
+    return solve_tab(arr, n); //n-1 is not taken because we want to create dp of size n 
+   // return solve_memo(arr, n-1,dp);
+}
+
