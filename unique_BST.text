@@ -1,0 +1,49 @@
+//https://www.codingninjas.com/codestudio/problems/unique-binary-search-trees_1266110?leftPanelTab=1
+
+//The idea to solve this is that for suppose i(1<=i<=n) node as root node all its left subtree will have elements from 1 to i-1 and on its right subtree it will have elements from i+1 to n. so for the particular BST with ith as root node the total number of possible trees are no. of trees possible on its left * no. of trees possible on its right. hence for all trees we find and add them  
+//Base case will be that for one node possible no. of BST are only 1
+
+#include<bits/stdc++.h>
+long long int solve_rec(int n)
+{
+    long long int ans = 0;
+    if(n <= 1) return 1;
+    for(int i = 1; i <= n; i++)
+    {
+        ans += solve_rec(i-1)*solve_rec(n -i);
+    }
+    return ans;
+}
+long long int solve_mem(int n, vector<int> &dp)
+{
+    long long int ans = 0;
+    if(n <= 1) return 1;
+    if(dp[n] != -1) return dp[n];
+    for(int i = 1; i <= n; i++)
+    {
+        ans += solve_rec(i-1)*solve_rec(n -i);
+    }
+    return dp[n] = ans;
+}
+
+long long int solve_Tab(int n)
+{
+    vector<long long int>dp(n+1, 0);
+    dp[0] = dp[1] = 1;
+    for(int i = 2; i <= n; i++) //traversing for the all the nodes(2 to n)
+    {
+        for(int j = 1; j <= i; j++)//traversing for the particular node for ex. node 4 we will traverse from 1 to 4
+        { 
+            dp[i] += dp[j-1]*dp[i-j];      
+        }
+    }
+    return dp[n];
+}
+
+long long int numTrees(int n) 
+{
+    vector<int>dp(n+1, -1);
+    //return solve_rec(n);
+//    return solve_mem(n, dp);
+      return solve_Tab(n);
+}
