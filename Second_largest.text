@@ -1,0 +1,25 @@
+//https://www.codingninjas.com/codestudio/problems/second-largest-element-in-the-array_873375?leftPanelTab=1
+#include <bits/stdc++.h> 
+int search_largest(int n, vector<int> &arr)
+{
+    int max_element = arr[0];
+        for(int i = 0; i < n; i++)
+    {
+        int curr = arr[i];
+            max_element = max(max_element, curr);
+    }
+    return max_element;
+    
+}
+int findSecondLargest(int n, vector<int> &arr)
+{
+    vector<int>temp;
+    int first_largest = search_largest(n, arr);
+    for(int i = 0; i < n; i++)
+    {
+        if(arr[i] != first_largest) temp.push_back(arr[i]); 
+    }
+    int size = temp.size();
+    if(temp.empty()) return -1;
+    return search_largest(size, temp);
+}
