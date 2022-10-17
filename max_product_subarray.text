@@ -1,0 +1,43 @@
+//https://www.codingninjas.com/codestudio/problems/maximum-product-subarray_1115474?leftPanelTab=1
+//Brute Force method has some problem 
+#include <bits/stdc++.h> 
+
+int brute_force(vector<int> &arr, int n)
+{
+     int max_product = arr[0];
+    for(int i = 0; i < n; i++)
+    {
+        int product = 1;
+        for(int j = i; j < n; j++)
+        {
+         product = product*arr[j];
+        }
+        max_product = max(max_product, product);
+    }
+    return max_product;
+}
+
+int optimal(vector<int> &arr, int n)
+{
+    int maxi = arr[0];   //this will update the ans
+    int mini = arr[0];   //this is used in case if we have -ve we can interchange with mini
+    int ans = arr[0]; 
+    for(int i = 1; i < n; i++)
+    {
+        
+        if(arr[i] != abs(arr[i])) //means -ve value   then we change maxi and mini value because maxi value becomes more less on multiplying the current number
+        {
+            int temp = maxi;
+            maxi = mini;
+            mini = temp;
+        }
+        maxi = max(arr[i], maxi*arr[i]);
+        mini = min(arr[i], mini*arr[i]);
+        if(maxi > ans) ans = maxi;
+    }
+    return ans;
+}
+int maximumProduct(vector<int> &arr, int n)
+{
+ return optimal(arr, n);  
+}
