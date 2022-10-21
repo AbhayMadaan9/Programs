@@ -1,0 +1,13 @@
+//https://www.codingninjas.com/codestudio/problems/number-of-digits_4538242?leftPanelTab=1
+
+#include <bits/stdc++.h> 
+int countDigit(long long x) {
+    int digit, count = 0;
+    while(x > 0)
+    {
+        digit = x % 10;
+        count++;
+        x = x/10;
+    }
+    return count;
+}

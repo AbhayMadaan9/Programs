@@ -1,0 +1,58 @@
+//https://www.codingninjas.com/codestudio/problems/check-if-one-string-is-a-rotation-of-another-string_1115683?leftPanelTab=1
+
+#include <bits/stdc++.h> 
+string rotate(string &strr)
+{
+    string str = strr;
+    int len = str.length();
+    char last = str[len-1];
+    //substituting char by char to the right side 
+    for(int i = len-2; i >= 0; i--)
+    {
+        str[i] = str[i+1]; 
+    }
+    str[0] = last;
+    return str;
+}
+int optimal(string &p, string &q)
+{
+    queue<char>q1;
+    queue<char>q2;
+    int n = p.length();
+    for(int i = n-1; i >= 0; i--)
+    {
+        q1.push(p[i]);
+        q2.push(q[i]);   
+    }
+    int i = 0;
+    while(i < n)
+    {
+        char front = q1.front();
+        q1.pop();
+        q1.push(front);
+        if(q1 == q2) return 1;
+        i++;
+    }
+    return 0;
+}
+int more_optimal(string str1, string str2)
+{
+    string temp = str1 + str1;
+    return (temp.find(str2) != -1);   //-1 means not found
+}
+int isCyclicRotation(string &p, string &q) 
+{
+    //Base condition 
+    int len1 = p.length();
+    int len2 = q.length();
+    if(len1 != len2) return 0;
+    
+//     string original_string = p;
+//     while(p!=q) 
+//     {
+//        p = rotate(p);
+//         if(original_string == p) return 0; //means after rotating completely it has not satisfied the while condition and is returned back
+//      }
+//     return 1;
+    return more_optimal(p, q);
+}
