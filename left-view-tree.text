@@ -1,0 +1,37 @@
+#include <bits/stdc++.h> 
+//https://www.codingninjas.com/codestudio/problems/left-view-of-a-binary-tree_920519?leftPanelTab=1
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+//Idea is here we start traversing from the left subtree and continue and on traversing we compare the size of ans(vector data structure to store our ans) and the level of node if same then push_back if not then continue traversing
+
+void solve(TreeNode<int>* root, int level, vector<int>& ans)
+{
+    if(root == NULL) return;
+    if(ans.size() == level) ans.push_back(root->data);
+    solve(root->left, level+1, ans);
+    solve(root->right, level+1, ans);
+}
+
+vector<int> getLeftView(TreeNode<int> *root)
+{
+    vector<int> ans;
+    solve(root, 0, ans);
+    return ans;
+}

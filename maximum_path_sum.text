@@ -1,0 +1,39 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+//https://www.codingninjas.com/codestudio/problems/maximum-sum-path-of-a-binary-tree_1214968?leftPanelTab=1
+#include<bits/stdc++.h>
+//This is similiar to diameter problem of binary tree 
+//this function returns the max_sum_path for the any node in the binary tree
+int solve(TreeNode<int> *root, int& maxi)
+{
+    if(root == NULL) return 0;
+    int left_subtree_sum = max(0, solve(root-> left, maxi));    //Incase if left or right subtree sum is -ve then we don't take it
+    int right_subtree_sum = max(0, solve(root-> right, maxi));
+    int pathsum = right_subtree_sum + left_subtree_sum + root->data; 
+    maxi = max(pathsum, maxi);
+    return max(right_subtree_sum, left_subtree_sum) + root->data;
+}
+int maxPathSum(TreeNode<int> *root)
+{
+    int ans = INT_MIN;
+    solve(root, ans);
+    return ans;
+
+}

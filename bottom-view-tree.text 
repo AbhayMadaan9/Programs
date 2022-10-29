@@ -1,0 +1,55 @@
+#include <bits/stdc++.h> 
+//https://www.codingninjas.com/codestudio/problems/bottom-view-of-binary-tree_893110
+/*************************************************************
+ 
+    Following is the Binary Tree node structure.
+
+    class BinaryTreeNode 
+    {
+    public : 
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+*************************************************************/
+//Idea is similiar to top view of binary tree but here inorder to get bottom level nodes we keep on replacing the nodes wrt to the node found corresponding to the line since here we are level order traversing so it stop taking the nodes once it get bottom nodes so here level order traversal is imp*.
+
+vector<int> solve(BinaryTreeNode<int> *root)
+{
+    queue<pair<BinaryTreeNode<int>*, int>>q; //second is line 
+    vector<int> ans;
+    if(root == NULL) return ans;
+    map<int, int>nodes;
+    q.push({root, 0});  //center line is 0
+     while(!q.empty())
+    {
+        auto combo = q.front();
+         BinaryTreeNode<int> *node = combo.first;
+         int line = combo.second;
+         //condition of adding only one node and replacing prev node with current node
+         nodes[line] = node->data;
+         if(node->left) q.push({node->left, line-1});
+         if(node->right) q.push({node->right, line+1});
+         q.pop();
+    }
+    
+    //extracting nodes from nodes data structure
+    for(auto i = nodes.begin(); i != nodes.end(); i++)
+    {
+        ans.push_back(i->second);
+    }
+    return ans;
+}
+
+vector<int> bottomView(BinaryTreeNode<int> * root){
+
+    return solve(root);
+    
+}
