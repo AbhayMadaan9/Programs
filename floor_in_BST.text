@@ -1,0 +1,61 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T val;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T val) {
+            this->val = val;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+//https://www.codingninjas.com/codestudio/problems/floor-from-bst_920457?leftPanelTab=1
+void solve_brute_force(TreeNode<int> * root, int X, vector<int>& ans)
+{
+    if(!root) return ;
+   solve_brute_force(root->left, X, ans);
+    ans.push_back(root->val);
+    solve_brute_force(root->right, X, ans);
+}
+int floorSearch(vector<int> & arr, int X, int N)
+{
+      int ans = INT_MAX;
+    int inter = INT_MAX;
+    for(int i = 0; i < N; i++)
+    {
+        if(arr[i] == X) return X;
+        if(arr[N-1] < X) return arr[N-1];  
+        if(X > arr[i] and arr[i+1] > X ) inter = arr[i];
+        ans = min(inter, ans);
+     }
+    if(ans == INT_MAX) return -1;
+    return ans;
+}
+int solve_optimized(TreeNode<int> * root, int X)
+{
+      if(!root) return -1;
+     int ans = -1;
+    while(root != NULL) 
+    {//if already present
+    if(root->val == X) {return root->val;}
+   else if(root->val < X) {root = root->left;}
+    else if(root->val > X){root = root->right; ans = root->val;}
+    }
+    return ans;
+} 
+int floorInBST(TreeNode<int> * root, int X)
+{
+    vector<int>ans;
+    solve_brute_force(root, X, ans);
+    return floorSearch(ans, X, ans.size());
+  // return solve_optimized(root, x);
+}

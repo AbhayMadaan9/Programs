@@ -1,0 +1,15 @@
+#include <bits/stdc++.h> 
+//https://www.codingninjas.com/codestudio/problems/ceiling-in-a-sorted-array_1825401
+int ceilingInSortedArray(int n, int x, vector<int> &arr){
+      int ans = INT_MIN;
+    int inter = INT_MIN;
+    for(int i = 0; i < n; i++)
+    {
+        if(arr[i] == x) return x;
+        if(arr[0] > x) return arr[0];  //special case for first element. when X is smaller than first element becomes Ceil
+        if(x > arr[i] and arr[i+1] > x) inter = arr[i+1];
+        ans = max(inter, ans);
+     }
+    if(ans == INT_MIN) return -1;
+    return ans;
+}

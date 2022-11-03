@@ -1,0 +1,57 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T val;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T val) {
+            this->val = val;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+//https://www.codingninjas.com/codestudio/problems/insert-into-a-binary-search-tree_1279913?leftPanelTab=1
+TreeNode<int>* solve(TreeNode<int>*root, int x)
+{
+    if(!root) return new TreeNode<int>(x);
+    TreeNode<int>*temp = root;
+    while(true)
+    {
+    if(temp->val > x)
+    {
+        if(temp->left) temp = temp->left;
+        else 
+        {
+         TreeNode<int>*node = new TreeNode<int>(x);
+            temp->left = node;
+            break;
+        }
+    }
+    if(temp->val < x)
+    {
+        if(temp->right) temp = temp->right;
+         else 
+        {
+         TreeNode<int>*node = new TreeNode<int>(x);
+            temp->right = node;
+            break;
+        }
+
+    }
+    }
+    
+    return root;
+
+}
+TreeNode<int>* insertionInBST(TreeNode<int>* root, int val)
+{
+    return solve(root, val);
+}
