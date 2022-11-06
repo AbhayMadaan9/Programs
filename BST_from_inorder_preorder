@@ -1,0 +1,55 @@
+#include <bits/stdc++.h> 
+//https://www.codingninjas.com/codestudio/problems/bst-from-preorder_2689307?leftPanelTab=1
+/*************************************************************
+
+    Following is the Binary Tree node structure
+
+    template <typename T>
+
+    class TreeNode{
+    public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+        ~TreeNode() {
+            if (left){
+                delete left;
+            }
+            if (right){
+                delete right;
+            }
+        }
+    };
+
+*************************************************************/
+TreeNode<int>* construct_bst(vector<int>preOrder, int pstart, int pend ,vector<int>inOrder, int istart, int iend, map<int, int>& ump)
+{
+    if(pstart > pend or istart > iend) return NULL; //its like the further no element so NULL
+    
+    TreeNode<int>*root = new TreeNode<int>(preOrder[pstart]);
+    int root_idx = ump[root->data];
+    
+    int inorder_left_size = root_idx - istart;
+    
+    root->left = construct_bst(preOrder, pstart+1 , pstart+inorder_left_size, inOrder, istart, root_idx-1, ump);
+    root->right = construct_bst(preOrder, pstart + inorder_left_size + 1, pend, inOrder, root_idx+1, iend, ump);
+  
+    
+    return root;
+}
+TreeNode<int>* preOrderTree(vector<int> &preOrder){
+    vector<int>inorder = preOrder;
+    sort(inorder.begin(), inorder.end()); //since inorder of bst is in increasing order
+        map<int, int>ump; //value, index
+    for(int i = 0; i < inorder.size(); i++)
+    {
+        ump[inorder[i]] = i;
+    }
+    return construct_bst(preOrder, 0, preOrder.size()-1,inorder, 0, inorder.size()-1, ump);
+}

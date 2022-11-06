@@ -1,0 +1,58 @@
+#include <bits/stdc++.h> 
+/*************************************************************
+
+    Following is the Binary Tree node structure
+
+    template <typename T>
+
+    class BinaryTreeNode
+    {
+    public :
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~BinaryTreeNode() {
+            if (left)
+            {
+                delete left;
+            }
+            if (right)
+            {
+                delete right;
+            }
+        }
+    };
+
+*************************************************************/
+//https://www.codingninjas.com/codestudio/problems/construct-bst-from-post-order_2674162?leftPanelTab=1
+BinaryTreeNode<int>* generate(vector<int>& postOrder, int pstart, int pend, vector<int>& inOrder, int istart, int iend, map<int, int>ump)
+{
+    if(pstart > pend or istart > iend) return NULL; //its like the further no element so NULL
+    
+    BinaryTreeNode<int>*root = new BinaryTreeNode<int>(postOrder[pend]);
+    int root_idx = ump[root->data];
+    
+    int inorder_right_size = iend-root_idx;
+    
+    root->right = generate(postOrder, pend-inorder_right_size , pend - 1 , inOrder, root_idx+1, iend, ump);
+    root->left = generate(postOrder, pstart, pend-inorder_right_size-1, inOrder, istart, root_idx-1, ump);
+    
+    return root;
+}
+BinaryTreeNode<int>* constructBST(vector<int>& postOrder) {
+    vector<int>inOrder = postOrder;
+    sort(inOrder.begin(), inOrder.end());
+       map<int, int>ump; //value, index
+    for(int i = 0; i < inOrder.size(); i++)
+    {
+        ump[inOrder[i]] = i;
+    }
+  return  generate(postOrder, 0, postOrder.size()-1, inOrder, 0, inOrder.size()-1, ump);
+}
