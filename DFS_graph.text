@@ -1,0 +1,26 @@
+//GFG: https://practice.geeksforgeeks.org/problems/depth-first-traversal-for-a-graph/1
+
+
+  void solve_rec(vector<int> adj[], vector<int>&ans, vector<bool>&visited, int cur_node)
+  {
+      visited[cur_node] = true;
+      ans.push_back(cur_node);
+        for(auto ite: adj[cur_node])
+        {
+              if(!visited[ite]) 
+                {
+                    solve_rec(adj, ans, visited, ite);
+                }
+        }
+  }
+    // Function to return a list containing the DFS traversal of the graph.
+    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+        //declaration
+        vector<int>ans;
+        vector<bool>visited(V, false);
+        
+        solve_rec(adj, ans, visited, 0);
+        return ans;
+    }
+};
+

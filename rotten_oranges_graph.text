@@ -1,0 +1,93 @@
+//A rotten orange can rot fresh orange neighbours that are at a distance of 1 or at the same level. It means each of them got rotten at a similar level or stage, implying we need to visit the same level at the same time. Hence, level-wise traversal is BFS traversal. so if the level increases time to rotten the oranges increases.
+
+//If we use DFS traversal then all neighbouring fresh oranges will be visited depth-wise. But here it is not the case to rot all the oranges, we need to find the minimum time to rot them all, which is possible only when we are in neighbouring directions at an equal pace. We want to rotten them simultaneously.
+
+//approch will be like we find the rotten oranges and push them to queue. and then we pickup the front and then rotten all its neighbouring oranges and continues for all the initially pushed rotten oranges since all them simultaneously rotten the oranges.Check if all the nodes are rotten in visited vector if yes then return the time else continue and then we push their neighbours to queue and continue the same process
+
+//https://www.codingninjas.com/codestudio/problems/rotting-oranges_701655?leftPanelTab=1
+#include<bits/stdc++.h>
+int minTimeToRot(vector<vector<int>>& grid, int n, int m)
+{
+    //declaration
+    int visited[n][m];
+    queue<pair<pair<int, int>, int>>q;  // <<row, coln>, time>
+    int cnt_fresh;
+    //Pushing the initial rotten nodes to queue and marking different nodes visited array
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = 0; j < m; j++)
+        {
+            if(grid[i][j] == 2)
+            {
+                visited[i][j] = 2;
+                q.push({{i, j}, 0});
+            }
+            else if(grid[i][j] == 1)
+            {
+                visited[i][j] = 1;
+                cnt_fresh +=1;
+            }
+            else
+            {
+                visited[i][j] = 0;
+            }
+        }
+    }
+    
+    int total_time = 0;
+    int cnt = 0;
+    //traversing
+    while(!q.empty())
+    {
+        auto node = q.front();
+        int row = node.first.first;
+        int col = node.first.second;
+        int time = node.second;
+
+        q.pop();
+       total_time = max(time, total_time);
+        //checking the 4 directions of node according to node
+           
+        //upward
+       if(row-1 >= 0 and visited[row-1][col] == 1 and grid[row-1][col] == 1) 
+       {
+           visited[row-1][col] = 2;
+           q.push({{row-1, col}, time+1});
+           cnt++;
+       }
+        //downward
+       if(row+1 < n and visited[row+1][col] == 1 and grid[row+1][col] == 1) 
+       {
+           visited[row+1][col] = 2;
+           q.push({{row+1, col}, time+1});
+           cnt++;
+       }
+        //right
+       if(col+1 < n and visited[row][col+1] == 1 and grid[row][col+1] == 1) 
+       {
+           visited[row][col+1] = 2;
+           q.push({{row, col+1}, time+1});
+           cnt++;
+       }
+        //left
+       if(col-1 >= 0 and visited[row][col-1] == 1 and grid[row][col-1] == 1) 
+       {
+           visited[row][col-1] = 2;
+           q.push({{row, col-1}, time+1});
+           cnt++;
+           
+       }
+        
+    }
+   // Two ways to check for case if any of the orange is left fresh
+    for(int i =0 ; i < n; i++)
+    {
+        for(int j = 0; j < m; j++)
+        {
+            if(visited[i][j] == 1) return -1;
+        }
+    }
+   // if(cnt != cnt_fresh) return -1;
+    return total_time;
+    
+}

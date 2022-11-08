@@ -1,0 +1,37 @@
+//logic is that we will be doing dfs traversal for each node such that if for any any node it came back to parent node then we return thus break our search further 
+#include<bits/stdc++.h>
+//https://www.codingninjas.com/codestudio/problems/cycle-detection-in-undirected-graph_1062670?leftPanelTab=1
+bool dfs(unordered_map<int, list<int> > adj, int cur_node, int parent_node, vector<bool> visited)
+ {
+       visited[cur_node] = true;
+        // visit adjacent nodes
+        for(auto adjacentNode: adj[cur_node]) {
+            // unvisited adjacent node
+            if(!visited[adjacentNode]) {
+                if(dfs(adj, adjacentNode, cur_node, visited) == true) 
+                    return true; 
+            }
+            // visited node but not a parent node
+            else if(adjacentNode != parent_node) return true; 
+        }
+        return false;
+ }
+string cycleDetection (vector<vector<int>>& edges, int n, int m)
+{
+   unordered_map<int, list<int> > adj;// is also a way to represent graph     
+   for(int i = 0; i < m; i++){
+        int u = edges[i][0];
+        int v = edges[i][1];
+        
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+}
+    
+    vector<bool>visited(n+1, false);
+    for(int i = 1; i <= n; i++)
+    {
+        bool ans =  dfs(adj, i, -1, visited);
+        if(ans) return "Yes";
+    }
+    return "No";
+}

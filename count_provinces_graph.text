@@ -1,0 +1,38 @@
+#include <bits/stdc++.h> 
+//https://www.codingninjas.com/codestudio/problems/find-the-number-of-states_1377943?leftPanelTab=1
+// long long int is_all_visited(vector<bool> visited)
+// {
+//     for(int i = 0; i < visited.size(); i++)
+//     {
+//         if(!visited[i]) return i;
+//     }
+//     return INT_MAX;
+// }
+  void solve_rec(int n, vector<vector<int>> adj_matrix , vector<int> ans, vector<bool>&visited, int cur_node)
+  {
+      visited[cur_node] = true;
+      ans.push_back(cur_node);
+        for(int i = 0; i < n; i++)
+        {
+              if(!visited[i] and adj_matrix[cur_node][i] == 1) 
+                {
+                    solve_rec(n, adj_matrix, ans, visited, i);
+                }
+        }
+  }
+int findNumOfStates(vector<vector<int>>& roads, int n) {
+    int count = 0; 
+    vector<bool>visited(n, false);   
+    vector<int>ans;
+
+        for(int i = 0; i < n; i++)
+        {
+            if(!visited[i])
+            {
+                solve_rec(n, roads, ans, visited, i);
+                count++;
+            }
+        }
+        
+    return count;
+}
