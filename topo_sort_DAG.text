@@ -1,0 +1,38 @@
+//In this problem, we use DFS(depth-first search) for topological sort. But we implement it using a modified version of the standard DFS algorithm. Instead of printing the node just after visiting, we store it in a temporary stack after visiting all of its adjacent nodes recursively.
+//https://www.codingninjas.com/codestudio/problems/topological-sort_982938?leftPanelTab=1
+#include <bits/stdc++.h> 
+void topoSort (int node , vector<bool> &visited , vector <int> &s , unordered_map <int, list<int> > &adj)
+{
+   visited[node] = 1 ; 
+   
+   for ( auto neighbour : adj[node] ) {
+       if ( !visited[neighbour] ) 
+           topoSort (neighbour , visited , s , adj) ;
+   }
+       //on reaching base condition that there is no further connections we comeback by pushing the nodes in it.
+           s.push_back(node);
+    //if we do pushing inside 'if' condition there will problem of ??????
+}  
+
+vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)
+{
+//changing representation
+    unordered_map <int, list<int> > adj ; 
+   
+   for ( int i = 0 ; i < e ; i++ ) {
+       int u = edges[i][0] ;
+       int v = edges[i][1] ;      
+       adj[u].push_back(v) ;        
+   }
+
+    vector <int> ans; 
+    vector <bool> visited(v) ; 
+    for ( int i = 0 ; i < v ; i++ ) 
+    {
+        if ( !visited[i] ) 
+            topoSort (i , visited , ans , adj) ;
+    }
+
+    reverse(ans.begin(), ans.end());
+    return ans;  
+}

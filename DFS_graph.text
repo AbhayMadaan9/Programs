@@ -15,12 +15,17 @@
   }
     // Function to return a list containing the DFS traversal of the graph.
     vector<int> dfsOfGraph(int V, vector<int> adj[]) {
-        //declaration
-        vector<int>ans;
-        vector<bool>visited(V, false);
-        
-        solve_rec(adj, ans, visited, 0);
-        return ans;
+      //declaration
+      vector<int>ans;
+      vector<bool>visited(V, false);
+      
+      for (int i = 0; i < V; i++) {
+    if (!visited[i]) {
+      solve_rec(adj, ans, visited, 0);
     }
+  }
+      
+      return ans;
+  }
 };
 
