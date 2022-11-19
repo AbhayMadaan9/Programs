@@ -1,0 +1,45 @@
+#include <bits/stdc++.h> 
+//same concept of https://www.codingninjas.com/codestudio/problems/shortest-path-in-a-binary-maze_893065?leftPanelTab=0
+//https://www.codingninjas.com/codestudio/problems/path-with-minimum-effort_1380958?leftPanelTab=1
+int minimumTimeTakingPath(vector<vector<int>>& heights){
+	
+    int vertices = heights.size();
+    int edges = heights[0].size();
+    //declarations + initiazation
+    priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>>q;
+    //motions
+    vector<int> del_rows = {-1, 0, +1, 0};
+    vector<int> del_cols = {0, +1, 0, -1};
+    vector<vector<int>>distances(vertices, vector<int>(edges, INT_MAX));
+    distances[0][0] = heights[0][0];
+    q.push({0, {0, 0}});    //initially at (0,0) no effort  
+
+    while(!q.empty())
+    {
+        auto node = q.top();
+        q.pop();
+        int cur_row = node.second.first;
+        int cur_col = node.second.second;
+        int cur_dis = node.first;
+        
+        if(cur_row == vertices-1 && cur_col == edges-1) return cur_dis;
+           //we have not added this condition below because since we are taking max so we might found min effort afterward(if taken down then it will take last second index if it is min and not go ahead to last might get min effort then one before)
+        //4 dir's motions
+        for(int i = 0; i < 4; i++)
+        {
+            int new_row = cur_row+del_rows[i];
+            int new_col = cur_col+del_cols[i]; 
+            if(new_row >= 0 && new_row < vertices && new_col >= 0 && new_col < edges)
+            {
+                int new_dis = max(abs(heights[new_row][new_col] - heights[cur_row][cur_col]), cur_dis);
+                if(new_dis < distances[new_row][new_col]) 
+                {
+                 distances[new_row][new_col] = new_dis;
+                q.push({new_dis, {new_row, new_col}});
+                }
+            }
+        }
+    }
+ 
+    return 0;
+}

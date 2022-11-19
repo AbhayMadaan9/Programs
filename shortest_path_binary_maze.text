@@ -1,0 +1,48 @@
+//we will be using dijasktra concept of choosing the minimal distance from current node uisng min heap to find shortest path. unit weight are considered 
+//THus we can say selection of node during customized bfs is on the basis of min heap 
+//https://www.codingninjas.com/codestudio/problems/shortest-path-in-a-binary-maze_893065?leftPanelTab=0
+#include<bits/stdc++.h>
+int shortestPathBinaryMatrix(vector<vector<int>> &matrix, pair<int, int> src, pair<int, int> dest)
+{
+    int vertices = matrix.size();
+    int edges = matrix[0].size();
+    //declarations + initiazation
+    priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>>q;
+    int distance = 0; 
+    //motions
+    vector<int> del_rows = {-1, 0, +1, 0};
+    vector<int> del_cols = {0, +1, 0, -1};
+    vector<vector<int>>distances(vertices, vector<int>(edges, INT_MAX));
+    distances[src.first][src.second] = 0; 
+    q.push({distance, {src.first, src.second}}); 
+    
+
+    while(!q.empty())
+    {
+        auto node = q.top();
+        q.pop();
+        int cur_row = node.second.first;
+        int cur_col = node.second.second;
+        int cur_dis = node.first;
+        //4 dir's motions
+        for(int i = 0; i < 4; i++)
+        {
+            int new_row = cur_row+del_rows[i];
+            int new_col = cur_col+del_cols[i];
+            int new_dis = cur_dis+1;
+            if(new_row >= 0 && new_row < vertices && new_col >= 0 && new_col < edges && matrix[new_row][new_col] == 1 && new_dis < distances[new_row][new_col])
+            {
+
+                 distances[new_row][new_col] = new_dis;
+                q.push({new_dis, {new_row, new_col}});
+                if(new_row == dest.first and new_col == dest.second)
+                {
+                    return new_dis;
+                }
+            }
+            }
+    }
+ 
+
+    return -1;
+}

@@ -1,0 +1,43 @@
+//logic on roughcopy
+//Its like we have we have to move through atmost k nodes and among then which is least costier path.
+//https://www.codingninjas.com/codestudio/problems/saving-money_1171195?leftPanelTab=0
+#include <bits/stdc++.h> 
+int savingMoney(int n, int source, int destination, int K, vector<vector<int>>& trains)
+{
+	  //change representation
+    vector<pair<int, int>> adj[n+1];
+    for(int i = 0; i < trains.size(); i++)
+    {
+     int u = trains[i][0];
+     int v = trains[i][1];
+     int price = trains[i][2];
+     adj[u].push_back({v, price});    
+    }
+    
+    //declarations + initiazation
+    queue<pair<int, pair<int, int>>>q;
+    vector<int>distances(n, INT_MAX);
+    q.push({0, {source, 0}});
+    
+    while(!q.empty())
+    {
+        auto node = q.front();
+        q.pop();
+        int stop = node.first;
+        int station = node.second.first;
+        int distance = node.second.second;
+        if(stop > K) break;
+        for(auto i: adj[station])
+        {
+            if(stop <= K and distance + i.second < distances[i.first])
+            {
+                q.push({stop+1, {i.first, distance + i.second}});
+                distances[i.first] =  distance + i.second;
+            }
+        }
+    }
+    //check the condition if we have breaked from loop
+    if(distances[destination] == INT_MAX) return -1;
+    
+    else return distances[destination];
+}
