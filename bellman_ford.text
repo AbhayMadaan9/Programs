@@ -1,0 +1,30 @@
+//Reason for doing n-1 relaxation(dis[u] + wt < dis[v]) is because in worst case we have take n-1 edges for going to destination node
+//-ve cycle exists if for nth time relaxation happens
+//Bellman ford main feature is to find shortest path in negative wt also as compare to disjktra algo.
+//https://www.codingninjas.com/codestudio/problems/bellmon-ford_2041977?leftPanelTab=1
+#include <bits/stdc++.h> 
+int bellmonFord(int n, int m, int src, int dest, vector<vector<int>> &edges)
+{
+    vector <int> dist(n+1 , 1e9) ;
+    dist[src] = 0 ; 
+  
+//      UPDATING N-1 TIMES 
+  
+  for ( int i = 0 ; i <= n ; i++ ) 
+  {
+//         TRAVERSE ALL EDGES
+      for ( int j = 0 ; j < m ; j++ )
+      {
+          int u = edges[j][0] ;
+          int v = edges[j][1] ;
+          int wt = edges[j][2] ;
+          
+          if ( dist[u] != 1e9 && ( (dist[u] + wt) < dist[v] ) )
+          {
+              dist[v] = dist[u] + wt ; 
+          }           
+      }
+  }
+   
+     return dist[dest] ;
+}
