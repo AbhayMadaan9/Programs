@@ -1,0 +1,46 @@
+//https://www.codingninjas.com/codestudio/problems/stack-implementation-using-array_3210209?leftPanelTab=1
+#include <bits/stdc++.h> 
+// Stack class.
+class Stack {
+    public:
+    int size;
+    int* arr;
+    int topi;
+    
+    Stack(int capacity) {
+        size = capacity;
+        arr = new int[size];
+        topi = -1;
+    }
+
+    void push(int num) {
+        if(topi < size)
+        {
+            topi++;
+            arr[topi] = num;
+        }
+    }
+
+    int pop() {
+        if(topi == -1) return -1;
+        int poped =  arr[topi];
+            topi--;
+        return poped;
+    }
+    
+    int top() {
+        if(topi == -1) return -1;
+        return arr[topi];
+    }
+    
+    int isEmpty() {
+        if(topi == -1) return 1;
+        else return 0;
+    }
+    
+    int isFull() {
+        if(topi == size) return 1;
+        else return 0;
+    }
+    
+};
