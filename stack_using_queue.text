@@ -1,0 +1,58 @@
+//logic on copy
+//https://www.codingninjas.com/codestudio/problems/stack-using-queue_795152?leftPanelTab=1
+#include <bits/stdc++.h> 
+class Stack {
+    //do it using stl queue(discuss)
+    queue<int>q1;//primary queue
+    queue<int>q2;//secondary queue
+
+   public:
+    Stack() {
+    }
+
+    /*----------------- Public Functions of Stack -----------------*/
+
+    int getSize() {
+        return q1.size();
+    }
+
+    bool isEmpty() {
+        if(q1.empty()) return true;
+        else return false;
+    }
+
+    void push(int element) {
+        //step1-> push it to sec. queue
+         q2.push(element);
+        
+        //step2-> take all element from prim. queue and push it to sec. queue
+        while(!q1.empty())
+        {
+            int poped = q1.front();
+            q2.push(poped);
+            q1.pop();
+        }
+        
+        //step3->take all the elements from sec. queue and push it to sec.queue
+        while(!q2.empty())
+        {
+            int pope = q2.front();
+            q1.push(pope);
+            q2.pop();
+        }
+        //done
+        
+    }
+
+    int pop() {
+        if(q1.empty()) return -1;
+        int popede = q1.front();
+        q1.pop();
+        return popede;
+    }
+
+    int top() {
+        if(q1.empty()) return -1;
+        else return q1.front();
+    }
+};

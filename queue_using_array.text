@@ -1,0 +1,48 @@
+//https://www.codingninjas.com/codestudio/problems/queue-using-array-or-singly-linked-list_2099908?leftPanelTab=1
+#include <bits/stdc++.h> 
+class Queue {
+    
+    int ffront;
+    int rear;
+    int size;
+    int *arr;
+    
+public:
+    Queue() {
+        ffront = 0; 
+        rear = 0;
+        size = 100001;
+        arr = new int[size];
+    }
+
+    /*----------------- Public Functions of Queue -----------------*/
+
+    bool isEmpty() {
+        if(ffront == rear) return true;
+        else return false;
+    }
+
+    void enqueue(int data) {
+        if(rear == size-1) return;
+        else
+        {
+            arr[rear] = data;
+            rear++;
+        }
+    }
+
+    int dequeue() {
+        if(ffront == rear) return -1;
+        else 
+        {
+            int dequed = arr[ffront];
+            ffront++;
+            return dequed;
+        }
+    }
+
+    int front() {
+        if(ffront == rear) return -1;
+        return arr[ffront];
+    }
+};

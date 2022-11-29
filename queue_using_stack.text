@@ -1,0 +1,47 @@
+//https://www.codingninjas.com/codestudio/problems/queue-using-stack_799482?leftPanelTab=1
+//steps on copy
+#include<bits/stdc++.h>
+class Queue {
+    stack<int>primary;
+    stack<int>secondary;
+
+    public:
+    Queue() {
+        
+    }
+
+    void enQueue(int val) {
+         
+        while(!primary.empty())
+        {
+           int poped =  primary.top();
+            primary.pop();
+            secondary.push(poped);
+        }
+        
+        primary.push(val);
+        
+        while(!secondary.empty())
+        {
+           int pope =  secondary.top();
+            secondary.pop();
+            primary.push(pope);
+        }
+    }
+
+    int deQueue() {
+        if(primary.empty()) return -1;
+       int popee = primary.top();
+        primary.pop();
+        return popee;
+    }
+
+    int peek() {
+        if(primary.empty()) return -1;
+        return primary.top();
+    }
+
+    bool isEmpty() {
+        return primary.empty();
+    }
+};
