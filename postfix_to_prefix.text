@@ -1,0 +1,29 @@
+//https://www.codingninjas.com/codestudio/problems/postfix-to-prefix_1788455
+#include <bits/stdc++.h> 
+string postfixToPrefix(string &s)
+{
+    string ans;
+    stack<string>stk;
+    
+    for(int i = 0; i < s.length(); i++)
+    {
+        char curr = s[i];
+        
+        if(curr >= 'A' and curr <= 'Z'){ string converted(1, curr); stk.push(converted);}
+        else if(!stk.empty())
+        {
+            string temp1 = stk.top();
+            stk.pop();
+            string temp2 = stk.top();
+            stk.pop();
+            string temp = curr + temp2 + temp1;
+            stk.push(temp);
+        }
+        else if(stk.size() <= 1) //means we can't pop two element from it 
+        {
+            string converted_(1, curr);
+            stk.push(converted_);
+        }
+    }
+    return stk.top();
+}

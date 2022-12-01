@@ -1,0 +1,41 @@
+//https://practice.geeksforgeeks.org/problems/evaluation-of-postfix-expression1735/1
+int evaluatePostfix(string exp)
+{
+        stack<int>s;
+for(int i = 0; i < exp.length(); i++)
+{
+    char curr = exp[i];
+    if(curr >= '0' and curr <= '9') {s.push(curr-'0');}
+    else if(!s.empty())
+    {
+        int temp1 = s.top();
+        s.pop();
+        int temp2 = s.top();
+        s.pop();
+        switch(curr)
+        {
+            case '*':
+                {
+                    s.push(temp2*temp1);
+                    break;
+                }
+            case '/':
+                {
+                    s.push(temp2/temp1);
+                    break;
+                }
+            case '+':
+                {
+                    s.push(temp2+temp1);
+                    break;
+                }
+            case '-':
+                {
+                    s.push(temp2-temp1);
+                    break;
+                }
+        }
+    }
+}
+return s.top();
+}
