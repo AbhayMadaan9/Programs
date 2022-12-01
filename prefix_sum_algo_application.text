@@ -1,0 +1,23 @@
+//https://www.codingninjas.com/codestudio/problems/range-sum_2410399?leftPanelTab=1
+vector<int> rangeSum(vector<int> &arr, vector<vector<int>> &queries)
+{
+    int n = arr.size();
+    // constructig prefix sum array
+    vector<int>pre(n+1);
+    pre.push_back(0);
+    for(int i = 0; i <= n; i++)
+    {
+        pre[i+1] = pre[i] + arr[i];
+    }
+    //resolving the queries with the help of prefix sum array
+    vector<int>ans;
+    for(auto i: queries)
+    {
+        int L = i[0];
+        int R = i[1];
+        int val = pre[R]- pre[L-1]; //+1 has to be done on both R, L index but here its not consideredsince 0 added in front of pre has increased the size distrubing arr elements indexing
+        ans.push_back(val);
+    }
+    return ans;
+}
+
