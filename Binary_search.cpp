@@ -1,15 +1,20 @@
-int bs(int *arr, int left, int right, int val)
-{
-    int mid = (right-left)/2;
-    if(arr[mid] == val) return mid;
-    else if(arr[mid] > val) return bs(arr, left, mid, val);
-    else if(arr[mid] < val) return bs(arr, mid, right, val);
-    else return -1;
+#include<bits/stdc++.h>
+using namespace std;
+//https://www.codingninjas.com/codestudio/problems/binary-search_972?leftPanelTab=1
+int solve(int *input, int start, int end, int val){
+    if(start > end) return -1;
+    int mid = (end+start)/2;
+    if(input[mid] == val) return mid;
+    else if(input[mid] > val) return solve(input, start, mid-1, val);
+    return solve(input, mid+1, end, val);
+    
 }
-
-
 int binarySearch(int *input, int n, int val)
 {
- int res = bs(arr, 0, n, val);
-    return res;
+    return solve(input, 0, n-1, val);
+        
+}
+int main()
+{
+    return 0;
 }
