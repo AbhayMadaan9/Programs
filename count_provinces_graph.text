@@ -1,0 +1,33 @@
+#include <bits/stdc++.h> 
+
+  void solve_rec(int n, vector<vector<int>> adj_matrix , vector<int> ans, vector<bool>&visited, int cur_node)
+  {
+      visited[cur_node] = true;
+      ans.push_back(cur_node);
+
+        for(int i = 0; i < n; i++)
+        {
+              if(!visited[i] and adj_matrix[cur_node][i] == 1) 
+                {
+                    solve_rec(n, adj_matrix, ans, visited, i);
+                }
+        }
+  }
+int findNumOfStates(vector<vector<int>>& roads, int n) {
+    //any traversal
+    int count = 0; 
+    vector<bool>visited(n, false);   
+    vector<int>ans;
+
+        for(int i = 0; i < n; i++)
+        {
+            if(!visited[i])
+            {
+                //call either bfs or dfs what affects is the number of times visited arry is changed(means number of times we call either bfs or dfs function to make all nodes visited);
+                solve_rec(n, roads, ans, visited, i);
+                count++;
+            }
+        }
+        
+    return count;
+}

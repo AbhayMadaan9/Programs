@@ -1,0 +1,35 @@
+//https://www.codingninjas.com/codestudio/problems/longest-subarray-zero-sum_757507?leftPanelTab=1
+#include<bits/stdc++.h>
+int lengthOfLongestSubarray(int arr[],int n)
+{
+    //dry run in rough copy if want email me
+     unordered_map<int, int>mp; //key is sum on taking the current element and value as index of the element
+    int sum = 0;
+    int max_length = 0;
+    int length = 0;
+    for(int i = 0; i < n; i++)
+    {
+        sum += arr[i];
+        if(sum == 0) 
+        {
+            length = i+1;
+            max_length = max(length, max_length);
+        }
+        else
+        {
+        if(mp.find(sum) == mp.end()) //means not found
+        {
+            mp.insert(make_pair(sum, i));
+        }
+        else //means it is present
+        {
+            auto iterator = mp.find(sum);    //this function returns iterator to                                                  that pair
+            int index = iterator->second;
+            length = i - index;
+            max_length = max(length, max_length);
+        }
+        }
+    }
+    return max_length;
+}
+//TC- O(NlogN)- N for traversal logN for map

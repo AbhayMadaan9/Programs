@@ -1,0 +1,53 @@
+#include <bits/stdc++.h> 
+//https://www.codingninjas.com/codestudio/problems/top-view-of-the-tree_799401
+/************************************************************
+
+    Following is the TreeNode class structure:
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T val;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T val) {
+            this->val = val;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+//Idea is to take the center as line 0 and take only one element of each line
+//Data structure used to store is map<line, node_value>
+
+vector<int> solve(TreeNode<int> *root)
+{
+    queue<pair<TreeNode<int>*, int>>q; //second is line 
+    vector<int> ans;
+    if(root == NULL) return ans;
+    map<int, int>nodes;
+    q.push({root, 0});  //center line is 0
+     while(!q.empty())
+    {
+        auto combo = q.front();
+         TreeNode<int> *node = combo.first;
+         int line = combo.second;
+         //condition of adding only one node
+         if(nodes.find(line) == nodes.end()) nodes.insert({line, node->val});
+         if(node->left) q.push({node->left, line-1});
+         if(node->right) q.push({node->right, line+1});
+         q.pop();
+    }
+    
+    //extracting nodes from nodes data structure
+    for(auto i = nodes.begin(); i != nodes.end(); i++)
+    {
+        ans.push_back(i->second);
+    }
+    return ans;
+}
+vector<int> getTopView(TreeNode<int> *root) {
+    return solve(root);
+}

@@ -1,0 +1,58 @@
+#include <bits/stdc++.h> 
+//https://www.codingninjas.com/codestudio/problems/lca-of-binary-tree_920541?leftPanelTab=1
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+bool root_to_node_path(TreeNode<int> *root, int x, vector<int>& ans)
+{
+    if(root == NULL) return false;
+    ans.push_back(root->data);
+    if(root->data == x) return true; 
+    bool left_subtree_search = root_to_node_path(root->left, x, ans);
+    bool right_subtree_search = root_to_node_path(root->right, x, ans);
+    
+    //if either of subtree found the node we return true
+    if(left_subtree_search or right_subtree_search) return true;
+    else
+        {
+        ans.pop_back();
+        return false;
+        }
+}
+int last_common(vector<int>v1,vector<int>v2)
+{
+    int size1 = v1.size();
+    int size2 = v2.size();
+    int i = 0;
+    while(i < size1 and i < size2)
+    {
+        if(v1[i] == v2[i]) i++;
+        else break;
+    }
+    return v1[i-1];
+}
+    
+int lowestCommonAncestor(TreeNode<int> *root, int x, int y)
+{
+	vector<int>path1;
+    vector<int>path2;
+    root_to_node_path(root, x, path1);
+    root_to_node_path(root, y, path2);
+    return last_common(path1, path2);
+}

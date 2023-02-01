@@ -1,0 +1,38 @@
+#include <bits/stdc++.h> 
+/**********************************************************
+
+    Following is the Binary Tree Node class structure:
+
+    template <typename T>
+
+    class BinaryTreeNode {
+    public :
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+		
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+***********************************************************/
+//https://www.codingninjas.com/codestudio/problems/identical-trees_799364?leftPanelTab=1
+//Method1:
+//If both are identical then any traversal will be same
+
+//Method2:
+//make one traversal and while traversing cross check three thinks 
+// 1.root value
+// 2.root left subtree/node
+// 3.root right subtree/node
+// are same or not
+
+bool identicalTrees(BinaryTreeNode<int>* root1, BinaryTreeNode<int>* root2) {
+        if(root1 == NULL and root2 == NULL) return true;
+        if(root1 == NULL or root2 == NULL ) return false; //means only one tree that node exist not on another 
+    return (root1->data == root2->data) and identicalTrees(root1->left, root2->left) and identicalTrees(root1->right, root2->right);
+
+}

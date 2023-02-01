@@ -1,0 +1,37 @@
+#include <bits/stdc++.h> 
+/*************************************************************
+ 
+    Following is the Binary Tree node structure
+
+    class BinaryTreeNode 
+    {
+    public : 
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+*************************************************************/
+//https://www.codingninjas.com/codestudio/problems/is-height-balanced-binary-tree_975497
+ int dfsHeight (BinaryTreeNode<int> *root) {
+
+        if (root == NULL) return 0;
+        
+        int leftHeight = dfsHeight (root -> left);
+        int rightHeight = dfsHeight (root -> right);
+        
+        if (abs(leftHeight - rightHeight) > 1 or leftHeight == -1 or rightHeight == -1) 
+            return -1;        //leftHeight or rightHeight = -1 means if on calculating the right or left subtree height dfsHeight func returns -1 because of abs(leftHeight - rightHeight) > 1 condition is not satisfied 
+
+        return max (leftHeight, rightHeight) + 1;
+ }
+bool isBalancedBT(BinaryTreeNode<int>* root) {
+       if(dfsHeight(root) != -1) return true;
+    else return false;
+}

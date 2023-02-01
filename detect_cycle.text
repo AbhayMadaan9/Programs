@@ -1,0 +1,55 @@
+//We will can use any approch either doing dfs or bfs(kahn's algo) 
+//In this problem we will use bfs(kahn's algo) if we are able to topo sort means the size of linearly sorted array is same as no of nodes then there exist no cycle since topo sort is applicable to only DAG. 
+//we will pick the code of kahn's problem and adjust it little  bit
+
+//We will be doing this problem using kahn's algorithm
+
+#include <bits/stdc++.h>
+ //https://www.codingninjas.com/codestudio/problems/detect-cycle-in-a-directed-graph_920545?leftPanelTab=0
+bool isCyclic(vector<vector<int>>& edges, int v, int e)
+{
+    //change representation
+     unordered_map<int,list<int>> adj;
+   for(int i=0;i<edges.size();i++){ //here up to edges.size() becz of edges traversal
+       int u = edges[i][0];
+       int v = edges[i][1];
+       
+       adj[u].push_back(v);
+       
+   }
+    //Indegree of nodes
+   vector<int> indegree(v);
+   //find indegree of all
+   for(auto i:adj){
+       for(auto j:i.second){
+           indegree[j]++;   // when node is encountered increments its count
+       }
+   }
+          
+    //declarations
+    queue<int>q;
+    int cnt = 0;
+    
+    //traversing the indegree to find vertex of indegree 0
+ for(int i=0;i<v;i++){ //here up to no. of vertices becz of vertices traversal
+       if(indegree[i]==0){
+           q.push(i);
+       }
+ }
+    
+    //doing the whole process of BFS but here will not be taking visited array because we will be visiting the nodes again and deducing their indegree if it becomes 0 then we push it to queue. and goes on untill q in not empty
+   while(!q.empty()){
+       int front=q.front();
+       q.pop();
+       cnt++;
+     //Now we will remove the its connections to reducing their indegree's by 1
+       for(auto i:adj[front]){
+           indegree[i]--;
+           if(indegree[i]==0)
+               q.push(i);
+       }
+   }
+   if(cnt == v) return false;
+    else return true;
+}    
+

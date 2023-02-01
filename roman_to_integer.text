@@ -1,0 +1,54 @@
+//https://www.codingninjas.com/codestudio/problems/roman-number-to-integer_981308?leftPanelTab=1
+
+
+//If the rosmaller number is placed before the largest number than we subtract it fm the next larger number
+
+#include <bits/stdc++.h> 
+long long int convert(char x)
+{
+    switch(x)
+    {
+        case 'I':
+            return 1;
+            break;
+            case 'V':
+            return 5;
+            break;
+            case 'X':
+            return 10;
+            break;
+            case 'L':
+            return 50;
+            break;
+            case 'C':
+            return 100;
+            break;
+        case 'D':
+            return 500;
+            break;
+        case 'M':
+            return 1000;
+            break;
+        default:
+            return -1;
+            break;
+            
+    }
+}
+ long long int romanToInt(string s) {
+   long long int ans = 0; 
+    for(int i = 0; i < s.length(); i++)
+    {
+        int val1 = convert(s[i]);
+        if(i+1<s.length())
+        {
+            int val2 = convert(s[i+1]);
+            if(val1 < val2) {
+                ans -= val1;
+            }
+            else ans += val1;
+        }
+        if(i == s.size()-1) ans += val1;
+    }
+    return ans;
+}

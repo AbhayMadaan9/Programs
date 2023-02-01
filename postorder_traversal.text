@@ -1,0 +1,50 @@
+//https://www.codingninjas.com/codestudio/problems/name_2035933?leftPanelTab=1
+
+#include <bits/stdc++.h> 
+/*
+Following is the structure of Tree Node
+
+class TreeNode 
+{
+   public:
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+
+    TreeNode(int val) 
+    {
+        this->val = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+*/
+void solve_iter(TreeNode *root, vector<int> &ans)
+{
+    stack<TreeNode *>stk;
+    if(root == NULL) return ;
+    stk.push(root);
+    while(!stk.empty())
+    {
+        TreeNode* node = stk.top();
+        stk.pop();
+        if(node->left) stk.push(node->left);
+        if(node->right) stk.push(node->right);
+        ans.push_back(node->val);
+    }
+}
+void solve_rec(TreeNode *root, vector<int> &ans)
+{
+    if(root == NULL) return ;
+    solve_rec(root->left, ans);
+    solve_rec(root->right, ans);
+    ans.push_back(root->val);
+}
+vector<int> postorderTraversal(TreeNode* root)
+{
+     vector<int>ans;
+    //solve_rec(root, ans);
+    solve_iter(root, ans);
+    reverse(ans.begin(), ans.end());
+    return ans;
+}

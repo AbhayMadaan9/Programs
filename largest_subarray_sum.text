@@ -1,0 +1,20 @@
+//https://www.codingninjas.com/codestudio/problems/maximum-subarray-sum_630526?topList=striver-sde-sheet-problems&leftPanelTab=1
+
+#include <bits/stdc++.h> 
+
+//Using Kadane algorithm
+ long long int kadane(int arr[], int n)
+{
+   long long int sum = 0,max_sum = INT_MIN;
+    for(int i = 0; i < n; i++)
+    {
+        sum += arr[i];
+        if(sum < 0) sum = 0;
+        max_sum = max(sum, max_sum);
+    }
+    return max_sum;
+}
+long long maxSubarraySum(int arr[], int n)
+{
+    return kadane(arr, n);
+}

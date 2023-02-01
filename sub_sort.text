@@ -1,0 +1,56 @@
+//approch on copy
+//https://www.codingninjas.com/codestudio/problems/sub-sort_1215009?leftPanelTab=1
+#include <bits/stdc++.h>
+int MiniMaxi(vector< int > &arr, int left, int right, int which_one)
+{
+    int maxi = arr[left], mini = arr[left];
+    switch(which_one)
+    {
+        case 1:
+            for(int i = left; i <= right; i++)
+            {
+                if(arr[i] > maxi) maxi = arr[i];
+            }
+            return maxi;
+            break;
+         
+        case 2:
+            for(int i = left; i <= right; i++)
+            {
+                 if(arr[i] < mini) mini = arr[i];
+            }
+            return mini;
+            break;
+    };
+}
+int subarraySort(vector< int > &arr) {
+     int n = arr.size();
+    if(n == 0) return 0;
+    //find step1 and step2 index
+    int step1, step2;
+    for(step1 = 0; step1 < n-1; step1++)
+    {
+    if(arr[step1] > arr[step1+1]) break;
+    }
+    if(step1 == n-1) return 0;
+     for(step2 = n-1; step2 > 0; step2--)
+    {
+    if(arr[step2] < arr[step2-1]) break;
+    }
+    if(step2 == 0) return 0;
+    //find the min and max in range of step1 and step2 index
+
+    int maxi = MiniMaxi(arr, step1, step2, 1);;
+    int mini = MiniMaxi(arr, step1, step2, 2);
+    //find the element which is less the mini in range of 0 to step1
+    for(int i = 0; i < step1; i++)
+    {
+        if(arr[i] > mini) {step1 = i; break;}
+    }
+      //find the element which is greater the maxi in range of n-1 to step2
+    for(int i = n-1; i > step2; i--)
+    {
+        if(arr[i] < maxi) {step2 = i; break;}
+    }
+    return (step2-step1+1);
+}

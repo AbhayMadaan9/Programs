@@ -1,0 +1,50 @@
+//We will be doing this problem using kahn's algorithm
+//https://www.youtube.com/watch?v=73sneFXuTEg&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=23
+#include<bits/stdc++.h>
+//https://www.codingninjas.com/codestudio/problems/topological-sorting_973003
+vector<int> topologicalSort(vector<vector<int>> &graph, int edges, int nodes) {
+    //change representation
+//     vector<int> adj[nodes];
+ unordered_map<int,list<int>> adj;
+   for(int i=0;i<edges;i++){
+       int u=graph[i][0];
+       int v=graph[i][1];
+       
+       adj[u].push_back(v);
+   }
+    //Indegree of nodes
+   vector<int> indegree(nodes);
+   //find indegree of all
+   for(auto i:adj){
+       for(auto j:i.second){
+           indegree[j]++;   // when node is encountered increments its count
+       }
+   }
+          
+    //declarations
+    queue<int>q;
+    vector<int>ans;
+    
+    //traversing the indegree to find vertex of indegree 0
+ for(int i=0;i<nodes;i++){
+       if(indegree[i]==0){
+           q.push(i);
+       }
+ }
+    
+    //doing the whole process of BFS but here will not be taking visited array because we will be visiting the nodes again and deducing their indegree if it becomes 0 then we push it to queue. and goes on untill q in not empty
+   while(!q.empty()){
+       int front=q.front();
+       q.pop();
+       
+       ans.push_back(front);
+              //Now we will remove the its connections to reducing their indegree's by 1
+       for(auto i:adj[front]){
+           indegree[i]--;
+           if(indegree[i]==0)
+               q.push(i);
+       }
+   }
+   return ans;
+}
+ 

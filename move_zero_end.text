@@ -1,0 +1,19 @@
+//2pointer approch => i varies acc. to 0 if current arr[j] is 0 then i remain of that position and j moves if  current arr[j] is not 0 then we place the value as arr[i] = arr[j]; and then we add 0 till the size left
+//https://www.codingninjas.com/codestudio/problems/interview-shuriken-41-move-zeroes-to-end_240143?leftPanelTab=1
+#include<bits/stdc++.h>
+void pushZerosAtEnd(vector<int> &arr) 
+{
+  int i = 0;
+    
+    for(int j=0;j<arr.size();j++){
+        if(arr[j]!=0){
+            arr[i] = arr[j];
+            i++;
+        }
+    }
+
+    for(int j = i;j<arr.size();j++){
+        arr[j] = 0;
+    }
+
+}

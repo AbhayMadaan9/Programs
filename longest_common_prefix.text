@@ -1,0 +1,31 @@
+//https://www.codingninjas.com/codestudio/problems/longest-common-prefix_2090383?leftPanelTab=1
+#include<bits/stdc++.h>
+string sol(vector<string> &arr, int n)
+{
+    bool flag = true;
+    string first = arr[0];
+    string ans;
+    for(int i = 0; i < first.size(); i++)   //traversing the  first string. we can choose any string and compare them with remaining strings till the size of that stirng because we have found common from long it does not matter which string is choosen for comparison
+    {
+        char ch_first = first[i];
+        
+        for(int j = 1; j < n; j++)
+        {
+            if(ch_first != arr[j][i] or arr[j].size() < i)
+            {
+                flag = false; 
+                break;
+            }
+        }
+        if(flag == false) break; 
+        ans += ch_first;
+    }
+      return ans;
+}
+
+string longestCommonPrefix(vector<string> &arr, int n)
+{
+    return sol(arr, n);
+}
+
+

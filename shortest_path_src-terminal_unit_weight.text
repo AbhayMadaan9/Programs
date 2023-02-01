@@ -1,0 +1,54 @@
+//Here for traversal we will use BFS because it traversal level by level which helps at each level to give shortest path and everything remain sorted
+//We use two techniques 
+//1.Logic is to use greedy approch at each step take smallest path and reach node as used in 
+//2.Create parent of each node and from destination we go to source node(using here)
+//https://www.codingninjas.com/codestudio/problems/shortest-path-in-an-unweighted-graph_981297?leftPanelTab=0
+#include<bits/stdc++.h>
+vector<int> shortestPath( vector<pair<int,int>> edges , int n , int m, int s , int t)
+{
+    //change representation
+    vector<int> adj[n+1];
+    for(int i = 0; i < edges.size(); i++)
+    {
+     int u = edges[i].first;
+     int v = edges[i].second;
+     adj[u].push_back(v);  
+     adj[v].push_back(u);  
+    }
+    
+    //declarations + initiazation
+    queue<int>q;
+    vector<int>parent(n+1, -1);
+    vector<bool>visited(n+1, false);
+    q.push(s);
+    
+    //forming parent vector while doing bfs
+    while(!q.empty())
+    {
+        int node = q.front();
+        q.pop();
+        visited[node] = true;
+        
+        for(auto i: adj[node])
+        {
+             if(!visited[i])
+             {
+                 parent[i] = node;
+                 q.push(i);
+                 visited[i] = true;
+             }
+        }
+    }
+    
+    vector<int>ans;
+    
+    int current_node = t;
+    ans.push_back(current_node);
+    while(current_node != s)
+    {
+        current_node = parent[current_node];
+        ans.push_back(current_node);
+    }
+    reverse(ans.begin(), ans.end());
+    return ans;
+}

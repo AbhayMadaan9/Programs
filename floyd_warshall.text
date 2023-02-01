@@ -1,0 +1,31 @@
+//https://www.codingninjas.com/codestudio/problems/flloyd-warshall_2041979?leftPanelTab=0
+#include<bits/stdc++.h>
+int floydWarshall(int n, int m, int src, int dest, vector<vector<int>> &edges) {
+    //creating matrix of weights
+    int ans[n+1][n+1] = {0};
+    for(int i = 0; i < edges.size(); i++)
+    {
+        int u = edges[i][0];
+        int v = edges[i][1];
+        int wt = edges[i][2];
+        ans[u][v] = wt;
+    }
+    for(int i=1;i<=n;i++){
+      for(int j=1;j<=n;j++){
+          if(ans[i][j]==0 and i!=j)
+               ans[i][j]=INT_MAX;
+      }
+    }
+
+   for(int k=1;k<=n;k++){
+       for(int i=1;i<=n;i++){
+           for(int j=1;j<=n;j++){
+              if (ans[i][k] == INT_MAX || ans[k][j] == INT_MAX)
+						continue;
+					ans[i][j] = min(ans[i][j], ans[i][k] + ans[k][j]);
+           }
+       }
+   }
+    if(ans[src][dest] == INT_MAX) return 1e9;
+    return ans[src][dest];
+}

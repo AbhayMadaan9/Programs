@@ -1,0 +1,81 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+Following is the Binary Tree node class
+    
+template <typename T = int>
+class TreeNode
+{
+public:
+    T data;
+    TreeNode<T> *left;
+    TreeNode<T> *right;
+
+    TreeNode(T val)
+    {
+        this->data = val;
+        left = NULL;
+        right = NULL;
+    }
+
+    ~TreeNode()
+    {
+        if (left != NULL)
+        {
+            delete left;
+        }
+        if (right != NULL)
+        {
+            delete right;
+        }
+    }
+};
+
+************************************************************/
+//https://www.codingninjas.com/codestudio/problems/zigzag-binary-tree-traversal_920532?leftPanelTab=1
+vector<int> zigzagTreeTraversal(TreeNode<int> *root)
+{
+    bool flag = true;            //this flag is  taken which alternatively changes as we go level by level down 
+    queue<TreeNode<int> *>q;
+    stack<TreeNode<int> *>s;
+    vector<int> ans;
+    q.push(root);    
+    if(root == NULL) return ans;
+    while(!q.empty())
+    {
+       
+            if(flag == false)  
+            {
+                 int size = q.size();
+                 for(int i = 0; i < size; i++)
+            {
+            TreeNode<int> *node = q.front();
+
+            s.push(node);
+            if(node->left) q.push(node->left);
+            if(node->right) q.push(node->right);
+             q.pop();
+            }
+            while(!s.empty())
+            {
+                TreeNode<int> *curr = s.top();
+                s.pop();
+                ans.push_back(curr->data);
+            }
+            }
+        if(flag == true)          //simple level order traversal
+        {
+            int size = q.size();
+        for(int i = 0; i < size; i++)
+        {
+            TreeNode<int> *node = q.front();
+            ans.push_back(node->data);
+            if(node->left) q.push(node->left);
+            if(node->right) q.push(node->right);
+            q.pop();
+        }
+        }
+        flag = !flag;
+    }
+    return ans;
+}

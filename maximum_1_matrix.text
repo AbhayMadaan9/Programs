@@ -1,0 +1,25 @@
+#include <bits/stdc++.h> 
+//https://www.codingninjas.com/codestudio/problems/row-of-a-matrix-with-maximum-ones_982768?leftPanelTab=1
+int maximumOnesRow(vector<vector<int>> &matrix)
+{
+    int count=0;
+    int maximum=INT_MIN;
+    int key=0 ;
+    for(int i=0;i<matrix.size();i++){
+        count=0 ;
+        for(int j=0;j<matrix[i].size();j++){
+            if(matrix[i][j]==1){
+                count++ ;
+            }
+        }
+        
+        if(count>maximum){
+            key = i ;
+            maximum=count ;
+        }
+        
+        
+    }
+    return key;
+
+}

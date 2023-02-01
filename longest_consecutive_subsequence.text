@@ -1,0 +1,44 @@
+#include <bits/stdc++.h> 
+//https://www.codingninjas.com/codestudio/problems/longest-consecutive-sequence_759408?leftPanelTab=1
+int optimal(vector<int> &arr)
+{
+      set < int > hashSet;
+  for (int num: nums) {
+    hashSet.insert(num);
+  }
+
+  int longestStreak = 0;
+
+  for (int num: nums) {
+    if (!hashSet.count(num - 1)) {
+      int currentNum = num;
+      int currentStreak = 1;
+
+      while (hashSet.count(currentNum + 1)) {
+        currentNum += 1;
+        currentStreak += 1;
+      }
+
+      longestStreak = max(longestStreak, currentStreak);
+    }
+  }
+
+  return longestStreak;
+}
+int lengthOfLongestConsecutiveSequence(vector<int> &arr, int n) {
+        sort(arr.begin(), arr.end());
+   int count =1;
+   int maxCount=1;
+   
+   for(int i=1; i<n; i++)
+   {
+       if(arr[i] - arr[i-1] == 1)
+           count++;
+       
+       else if(arr[i] - arr[i-1] != 0)
+           count= 1;
+       
+       maxCount= max(maxCount, count);
+   }
+   return maxCount;
+}

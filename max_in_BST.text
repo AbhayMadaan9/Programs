@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+/**********************************************************
+
+	Following is the Binary Tree Node class structure
+
+	template <typename T>
+	class BinaryTreeNode {
+    	public : 
+    	T data;
+    	BinaryTreeNode<T> *left;
+    	BinaryTreeNode<T> *right;
+
+    	BinaryTreeNode(T data) {
+        	this -> data = data;
+        	left = NULL;
+        	right = NULL;
+    	}
+	};
+
+***********************************************************/
+//https://www.codingninjas.com/codestudio/problems/min-and-max-of-binary-tree_5673
+/*
+	The first value of the pair must be the minimum value in the tree and 
+	the second value of the pair must be the maximum value in the tree
+*/
+//simple approch leftmost node gives min and rightmost node gives max for the BST not BT
+//for this question i.e. BT simply compare the node left and right node
+void find_min(BinaryTreeNode<int> *root, int& mini)
+{
+    if(!root) return ;
+    if(mini > root->data) mini = root->data;
+     find_min(root->left, mini);
+     find_min(root->right, mini);
+}
+void find_max(BinaryTreeNode<int> *root, int& maxi)
+{
+    if(!root) return ;
+    if(maxi < root->data) maxi = root->data;
+     find_max(root->left, maxi);
+     find_max(root->right, maxi);
+}
+
+pair<int, int> getMinAndMax(BinaryTreeNode<int> *root) {
+    pair<int, int>ans(INT_MAX, INT_MIN); 
+     find_min(root, ans.first);
+     find_max(root, ans.second);
+    return ans;
+    
+}

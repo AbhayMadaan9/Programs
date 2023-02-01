@@ -1,0 +1,49 @@
+//https://www.codingninjas.com/codestudio/problems/rotate-array_1230543?leftPanelTab=1
+
+#include <bits/stdc++.h> 
+#include <iostream>
+using namespace std;
+
+  void rotate(int *arr, int n, int k)
+  {
+      list<int>ls;
+      int i = 0; 
+      while(i < n)
+      {
+          ls.push_back(arr[i]);
+          i++;
+      }
+      i = 0; 
+      while(i < k)
+      {
+          int curr = ls.front();
+          ls.pop_front();
+          ls.push_back(curr);
+          i++;
+      }
+      i = 0;
+       while(!ls.empty())
+      {
+           int curr = ls.front();
+          ls.pop_front();
+          arr[i] = curr;
+          i++;
+      }
+      
+  }
+int main() {
+      int N;
+   cin >> N;
+   int *arr = new int[N];
+   for(int i = 0 ; i < N ; i++){
+       cin >> arr[i];
+   }
+   int k;
+   cin >> k;
+   rotate(arr , N , k);
+   for(int i = 0 ; i < N ; i++){
+       cout << arr[i] << " ";
+   }
+
+    return 0;
+}

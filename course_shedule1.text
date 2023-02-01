@@ -1,0 +1,49 @@
+//problem state that we have to complete the courses but every course have its prequiste so after clearing all the prequestives of the respective prequestive we finish it. It is like a directed graph if whey are able to make topological sort then we can finish the courses else we get stuck in cycle and we are not able to complete the courses.
+//https://www.codingninjas.com/codestudio/problems/course-schedule_985288?leftPanelTab=0
+#include <bits/stdc++.h> 
+string canFinish(vector<vector<int>>& prerequisites, int n, int m)
+{
+       //change representation
+     unordered_map<int,list<int>> adj;
+   for(auto j: prerequisites){ //here up to edges.size() becz of edges traversal
+       int u = j[0];
+       int v = j[1];
+        
+       adj[u].push_back(v); //order changes
+       
+   }
+    //Indegree of nodes
+   vector<int> indegree(n+1);   //numbering of courses is from 1
+   //find indegree of all
+   for(auto i:adj){
+       for(auto j:i.second){
+           indegree[j]++;   // when node is encountered increments its count
+       }
+   }
+          
+    //declarations
+    queue<int>q;
+    int cnt = 0;
+    
+    //traversing the indegree to find vertex of indegree 0
+ for(int i=1;i<=n;i++){ //here up to no. of vertices becz of vertices traversal
+       if(indegree[i]==0){
+           q.push(i);
+       }
+ }
+    
+    //doing the whole process of BFS but here will not be taking visited array because we will be visiting the nodes again and deducing their indegree if it becomes 0 then we push it to queue. and goes on untill q in not empty
+   while(!q.empty()){
+       int front=q.front();
+       q.pop();
+       cnt++;
+     //Now we will remove the its connections to reducing their indegree's by 1
+       for(auto i:adj[front]){
+           indegree[i]--;
+           if(indegree[i]==0)
+               q.push(i);
+       }
+   }
+   if(cnt == n) return "Yes";
+    else return "No";
+}

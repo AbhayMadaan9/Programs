@@ -1,0 +1,31 @@
+#include <bits/stdc++.h> 
+//https://www.codingninjas.com/codestudio/problems/symmetric-tree_981177?leftPanelTab=1
+// Following is the Binary Tree node structure
+/**************
+class BinaryTreeNode {
+    public : 
+    T data;
+    BinaryTreeNode<T> *left;
+    BinaryTreeNode<T> *right;
+
+    BinaryTreeNode(T data) {
+        this -> data = data;
+        left = NULL;
+        right = NULL;
+    }
+    
+};
+***************/
+//Method1: Idea is to do level order traversal and store them in vector of vector data structure and check palindrome for each vector of vector if all are true then return true else return false
+//Method2: Simply traverse the tree and compare the left and right subtree nodes.it is similiar to identical tree problem so add the three condition of them
+
+bool solve(BinaryTreeNode<int>* root1, BinaryTreeNode<int>* root2)
+{
+    if(root1 == NULL and root2 == NULL) return true;
+    if(root1 == NULL or root2 == NULL) return false;
+    return (solve(root1->left, root2->right) and solve(root1->right, root2->left) and root1->data == root2->data);
+}
+bool isSymmetric(BinaryTreeNode<int>* root) {
+    if(root == NULL) return true;
+    return solve(root->left, root->right);
+}

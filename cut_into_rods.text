@@ -1,0 +1,20 @@
+
+// https://www.codingninjas.com/codestudio/problems/cut-into-segments_1214651
+#include<bits/stdc++.h>
+int solve(int n, int x, int y, int z, vector<int> &dp)
+{
+    if(n==0) return 0;
+    if(n < 0) return INT_MIN; // we have taken -infinity because it will help in getting max value will camparing since with n<0 it is not possible to cut so we have to ignore it just by making it -infinity which is always the least while comparing which will automatically be ignored due its least value
+    if(dp[n] != -1) return dp[n];
+ int a = solve(n-x,x, y, z ,dp) + 1; //taking x 
+     int b =solve(n-y,x, y, z, dp) + 1; //taking y 
+ int c =    solve(n-z,x, y, z, dp) + 1; //taking z 
+    return dp[n] = max(a, max(b, c));
+}
+int cutSegments(int n, int x, int y, int z) {
+    
+    vector<int> dp(n+1, -1);
+    int ans = solve(n, x, y, z, dp);       
+    if(ans < 0) return 0;
+    return ans;
+}

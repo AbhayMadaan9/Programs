@@ -1,0 +1,54 @@
+//We will choose the BFS algorithm as it moves step by step and we want all of them to traverse in a single step together so that we can have a minimum count with us.
+//In this when we found 1 we push it to queue and then after doing this. we start poping out one by one and for each we explore its nearest one's (u, d, r, l)
+//https://www.codingninjas.com/codestudio/problems/distance-of-nearest-cell-having-1-in-a-binary-matrix_1169913?leftPanelTab=1
+#include<bits/stdc++.h>
+void bfs(vector < vector < int > >mat, vector < vector < int > >&distance_mat,vector < vector < int > >visited,  int delrows[], int delcols[], int n, int m)
+{
+    queue<pair<pair<int, int>, int>> q;//((row, col), distance/steps toward 1)
+        
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < m; j++)
+            {
+                if(mat[i][j] == 1)
+                {
+                    q.push({{i, j}, 0});   
+                    visited[i][j] = 1;
+                    //distance_mat[i][j] = 0;
+                }
+            }
+        }
+    
+    while(!q.empty())
+    {
+        auto node = q.front();  
+        q.pop();
+        int row = node.first.first;
+        int col = node.first.second;
+        int dis = node.second;
+        for(int i = 0; i < 4; i++)  //checking 4 possibilites
+        {
+            
+                int del_row = row + delrows[i];
+                int del_col = col + delcols[i];
+                if(del_row < n and del_row >= 0 and del_col < m and del_col >= 0 and visited[del_row][del_col] == 0)
+                {
+                    q.push({{del_row, del_col}, dis+1});
+                    visited[del_row][del_col] = 1;
+                    distance_mat[del_row][del_col] = dis+1;
+                }
+            
+        }
+        
+    }
+}
+vector < vector < int > > nearest(vector < vector < int >> & mat, int n, int m) {
+    //declarations
+    vector <vector < int >>distance_mat(n, vector<int>(m, 0)); //this is the ans of problem
+    vector <vector < int >>visited(n, vector<int>(m, 0)); //initially all are 0
+    int delrows[] = { -1, +1, 0, 0}; //upward, downward, left, right
+    int delcols[] = { 0, 0, -1, +1};
+    bfs(mat, distance_mat, visited, delrows, delcols, n, m);
+    return distance_mat;
+    
+}

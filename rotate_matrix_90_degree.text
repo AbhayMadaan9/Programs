@@ -1,0 +1,29 @@
+//Brute force:take dummy matrix lineary store rotated row in dummy matrix and it becomes the ans.
+// Optimised approch: Transpose the matrix and then reverse each row
+//https://www.codingninjas.com/codestudio/problems/rotate-matrix-by-90-degrees_981261?leftPanelTab=1
+#include <bits/stdc++.h> 
+vector<vector<int>> rotateMatrix(vector<vector<int>> &matrix)
+{
+    //Brute force
+    int N = matrix.size();
+    vector<vector<int>> ans(N, vector<int>(N));
+    for (int i = 0; i < N; i++){
+        for (int j = 0; j < N; j++){
+            ans[N-j-1][i] = matrix[i][j];
+        }
+    }
+    
+     
+    //below mehtod is optimised version
+//     int N = matrix.size();
+//     //Transpose the matrix(exhange row and column)
+//     for (int i = 0; i < N; i++)
+//         for (int j = i + 1; j < N; j++)
+//             swap(matrix[i][j], matrix[j][i]);
+//     //Reverse each row
+//     for (int i = 0; i < N; i++)
+//         for (int j = i + 1; j < N; j++)
+//             swap(matrix[i][j], matrix[i][N-j]);
+    return ans;
+    
+}

@@ -1,0 +1,34 @@
+//https://www.codingninjas.com/codestudio/problems/majority-element_842495?leftPanelTab=1
+
+#include <bits/stdc++.h> 
+
+int moore_voting_algo(int arr[], int n)
+{
+    int count = 0;
+    int element;
+    for(int i = 0; i < n; i++)
+    {
+        if(count == 0)
+        {
+            element = arr[i];
+        }
+        if(element == arr[i]) count++;
+       else count--;
+    }
+    return element;
+}
+bool ismajority(int arr[], int n)
+{
+    int ME = moore_voting_algo(arr, n);
+    int count = 0;
+    for(int i = 0; i < n; i++)
+    {
+        if(ME == arr[i]) count++;
+    }
+    if(count > floor(n/2)) return true;
+    else return false;
+}
+int findMajorityElement(int arr[], int n) {
+    if(ismajority(arr, n)) return moore_voting_algo(arr, n);
+    else return -1;
+}

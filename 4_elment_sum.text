@@ -1,0 +1,29 @@
+//https://www.codingninjas.com/codestudio/problems/find-four-elements-that-sums-to-a-given-value_983605?leftPanelTab=1
+
+#include <bits/stdc++.h> 
+
+
+string solve(vector<int> arr, int target, int n)
+{
+    int i = 0, j = n-1;
+    
+    for(i = 0; i < n; i++)
+    {
+        for(j = n-1; j > i; j--)
+        {
+            int p = i+1, q = j-1;
+            
+            while(p < q)
+    {
+        if(arr[i] + arr[p] + arr[q] + arr[j] == target) return "Yes";
+        if(arr[i] + arr[p] + arr[q] + arr[j] < target) p++;
+        else q--;
+    }
+        }
+    }
+return "No";
+}
+string fourSum(vector<int> arr, int target, int n) {
+    sort(arr.begin(), arr.end());
+    return solve(arr, target, n);
+}

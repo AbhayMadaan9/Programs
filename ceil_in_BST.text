@@ -1,0 +1,58 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the TreeNode class structure:
+
+    class BinaryTreeNode {
+    public:
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+        
+        BinaryTreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+        
+        ~BinaryTreeNode() {
+            if (left) {
+              delete left;
+            }
+            if (right) {
+              delete right;
+            }
+        }
+    };
+
+************************************************************/
+//https://www.codingninjas.com/codestudio/problems/ceil-from-bst_920464?leftPanelTab=1
+//one simple method is by making inorder traversal of BST which is sorted  and find the ceil using binary or linear search 
+// Optimised method is by search with the condition like we do binary search in sorted array(similiar to floor done there but it's not working neither in here nor there)
+// As shown below
+void solve_brute_force(BinaryTreeNode<int> * root, int X, vector<int>& ans)
+{
+    if(!root) return ;
+   solve_brute_force(root->left, X, ans);
+    ans.push_back(root->data);
+    solve_brute_force(root->right, X, ans);
+}
+int ceilingInSortedArray(int n, int x, vector<int> &arr){
+      int ans = INT_MIN;
+    int inter = INT_MIN;
+    for(int i = 0; i < n; i++)
+    {
+        if(arr[i] == x) return x;
+        if(arr[0] > x) return arr[0];  //special case for first element. when X is smaller than first element becomes Ceil
+        if(x > arr[i] and arr[i+1] > x) inter = arr[i+1];
+        ans = max(inter, ans);
+     }
+    if(ans == INT_MIN) return -1;
+    return ans;
+}
+
+int findCeil(BinaryTreeNode<int> *node, int x){
+    vector<int>ans;
+    solve_brute_force(node, x, ans);
+    return ceilingInSortedArray(ans.size(), x, ans);
+}
