@@ -1,5 +1,5 @@
 #include <bits/stdc++.h> 
-//https://www.codingninjas.com/codestudio/problems/number-of-islands_845181?leftPanelTab=1
+//https://www.codingninjas.com/codestudio/problems/number-of-islands_845181?leftPanelTab=0
 void dfs(vector<vector<int>> grid, int x, int y, vector<vector<bool>> &visited, int delrows[], int delcols[], int N, int M)
 {
    visited[x][y] = true;

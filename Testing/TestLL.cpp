@@ -6,7 +6,7 @@ class Node
 {
 public:
     T data;
-    Node *next;
+    Node<int> *next;
 
     Node(T data)
     {
@@ -64,6 +64,30 @@ Node<int> *merge(Node<int> *l1, Node<int> *l2)
     cur->next = l1 ? l1 : l2;
     return dummy->next;
 }
+Node<int> * segregateOddEven (Node<int> * head)
+{
+   if(!head or !head->next) return head;
+  Node<int> *start = head;
+  Node<int> *temp = head;
+  int count = 0;
+  while (temp) {
+    count++;
+    temp = temp->next;
+  }
+  cout<<count<<endl;
+  Node<int> *end = temp;
+  count = (count % 2 == 0) ? count / 2 + 1 : count / 2;
+  
+//   while (count--) {
+//     end->next = start->next;
+//     start->next = start->next->next;
+//     end->next->next = NULL;
+//     // update
+//     end = end->next;
+//     start = start->next;
+//   }
+  return head;
+}
 int main()
 {
     Node<int> *LL1 = new Node(1);
@@ -85,7 +109,8 @@ int main()
   Node<int>*SecondHalf = Mid->next;
   Mid->next = NULL;
     // merging alteratively
-    Node<int>*newe = merge(FirstHalf, SecondHalf);
-    print(newe);
+    // Node<int>*newe = merge(FirstHalf, SecondHalf);
+    segregateOddEven(LL1);
+   // print(LL1);
     return 0;
 }
