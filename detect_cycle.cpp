@@ -33,7 +33,4 @@ bool detectCycle(Node *head)
     }
     return false;
 }
-int main()
-{
-    return 0;
-}
+
