@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include <bits/stdc++.h>
+
 // approch 1 Genrating all the possibe strings by removing the current index bracket or skipping the current index bracket.
 // approch 2 (idea from given approch of this solutions which appears on a page before enter to this page)using BFS
 
@@ -78,15 +78,47 @@ vector<string> minRemovaltoMakeStringValid(string &str)
     }
     return ans;
 }
+char kThCharaterOfDecryptedString(string s, long long k)
+{
+    string decrypted;
+    int i = 0;
+    while(i < s.length())
+    {
+        string temp = "";
+        if(!isdigit(s[i]))
+        {
+            while(!isdigit(s[i]))
+            {
+                temp += s[i];
+                i++;
+            }
+        }
+        else{
+            string num = "";
+            while(isdigit(s[i]))
+            {
+                num += s[i];
+                i++;
+            }
+            int len = stoi(num);
+            while(len--)
+            {
+                decrypted.append(temp);
+            }
+        }
+    }
+    return decrypted[k-1];
+}
 void print(vector<string> ans)
 {
     for (const auto &i : ans) cout << i << endl;
 }
 int main()
 {
-
-    string str = "(()a";
-    vector<string> ans = minRemovaltoMakeStringValid(str);
-    print(ans);
+    string str = "av5g2";
+//    vector<string> ans = minRemovaltoMakeStringValid(str);
+    char kthChar = kThCharaterOfDecryptedString(str, 6);
+    cout<<kthChar<<endl;
+   // print(ans);
     return 0;
 }
