@@ -109,6 +109,25 @@ char kThCharaterOfDecryptedString(string s, long long k)
     }
     return decrypted[k-1];
 }
+
+int specialSum(vector<int> &arr, int n) {
+  int sum = accumulate(arr.begin(), arr.end(), 0);
+  if (sum > 9) {
+    while (sum > 9) {
+      string str = to_string(sum);
+      int ind = 0;
+      int newSum = 0;
+      while (ind < str.size()) {
+        int digit = str[ind] - '0';
+        newSum += digit;
+        ind++;
+      }
+      sum = newSum;
+    }
+  }
+  else return sum;
+}
+
 void print(vector<string> ans)
 {
     for (const auto &i : ans) cout << i << endl;
@@ -117,8 +136,10 @@ int main()
 {
     string str = "av5g2";
 //    vector<string> ans = minRemovaltoMakeStringValid(str);
-    char kthChar = kThCharaterOfDecryptedString(str, 6);
-    cout<<kthChar<<endl;
+    //char kthChar = kThCharaterOfDecryptedString(str, 6);
+    //cout<<kthChar<<endl;
+    vector<int> arr = {2,5,5,2};
+    cout<<specialSum(arr, 4);
    // print(ans);
     return 0;
 }
